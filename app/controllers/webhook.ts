@@ -19,7 +19,7 @@ export const handleWebhook = async (
     if (!isActive) {
       await sendMessageWpp(
         chatId,
-        "Você não faz parte da lista de autorizados, fale com alguém do setor de RH da CAS.",
+        "Não encontrei você na base, fale com alguém do setor de RH da CAS.",
         null,
       );
       return;
