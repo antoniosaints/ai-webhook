@@ -19,21 +19,23 @@ export function formatCpfCnpj(value: string | number): string {
   return value.toString();
 }
 
-export function formatTelefone(valor: string | number): string {
+export function formatTelefone(valor?: string | number): string {
+  if (valor === undefined || valor === null) {
+    return "";
+  }
+
   let numeros = String(valor).replace(/\D/g, "");
 
-  // Remove DDI 55
   if (numeros.startsWith("55")) {
     numeros = numeros.slice(2);
   }
 
-  // Garante o 9º dígito
   if (numeros.length === 10) {
     numeros = numeros.slice(0, 2) + "9" + numeros.slice(2);
   }
 
   if (numeros.length !== 11) {
-    return valor.toString();
+    return "";
   }
 
   const ddd = numeros.slice(0, 2);
