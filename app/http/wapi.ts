@@ -22,3 +22,16 @@ export const sendMessageWpp = async (
     return error;
   }
 };
+
+export const updateWebhookOnReceived = async (url: string) => {
+  try {
+    const response = await http.put(
+      `webhook/update-webhook-received?instanceId=${env.INSTANCE_ID}`,
+      { value: url },
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao configurar webhook:", error);
+    return error;
+  }
+};

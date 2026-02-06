@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { handleWebhook } from "./controllers/webhook";
 import { startRotinaQueue } from "./jobs/queue/cronQueue";
+import { updateWebhookOnReceived } from "./http/wapi";
 
 // Carrega variáveis de ambiente
 dotenv.config();
@@ -15,6 +16,7 @@ startRotinaQueue();
 
 // Definição das Rotas
 app.post("/webhook", handleWebhook);
+app.post("/setWebhook", updateWebhookOnReceived);
 
 // Inicia o servidor
 const PORT = process.env.PORT || 3000;
