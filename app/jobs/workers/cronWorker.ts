@@ -3,8 +3,7 @@ import { redis } from "../../service/redis";
 import { getAniversariantesDoDia } from "../../service/functions/getAniversariantes";
 import { generateAIResponse } from "../../service/ai";
 import { sendMessageWpp } from "../../http/wapi";
-
-const GRUPO_WPP_ID = "120363167085811861@g.us";
+import { env } from "../../utils/dotenv";
 
 async function rotinaDiaria(job: Job) {
   console.log(`[ROTINA] Iniciando rotina diária | Job: ${job.id}`);
@@ -27,7 +26,7 @@ async function rotinaDiaria(job: Job) {
           return;
         }
 
-        await sendMessageWpp(GRUPO_WPP_ID, resposta);
+        await sendMessageWpp(env.GRUPO_PARABENS, resposta);
       } catch (error) {
         console.error(
           `[ROTINA] Erro ao processar aniversariante ${nome}`,

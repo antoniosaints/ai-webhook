@@ -25,6 +25,7 @@ const envSchema = zod.object({
   REDIS_HOST: zod.string().optional().nullable(),
   REDIS_PORT: zod.string().optional().nullable(),
   REDIS_PASS: zod.string().optional().nullable(),
+  GRUPO_PARABENS: zod.string().min(1, "GRUPO_PARABENS é obrigatório"),
 });
 
 const parsed = envSchema.safeParse(process.env);
