@@ -15,11 +15,11 @@ export const handleWebhook = async (
     const sender = data.sender.id;
 
     //verifica se o usuario é parte da base do censo
-    const isActive = censoService.getUserByNumber(sender);
+    const isActive = await censoService.getUserByNumber(sender);
     if (!isActive) {
       await sendMessageWpp(
         chatId,
-        "Você não está na base de dados do censo.",
+        "Você não faz parte da lista de autorizados, fale com alguém do setor de RH da CAS.",
         null,
       );
       return;
