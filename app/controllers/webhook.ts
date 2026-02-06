@@ -44,7 +44,7 @@ export const handleWebhook = async (
     // 2. Busca histórico (inclui a mensagem que acabamos de salvar)
     const fullHistory = await chatHistoryService.getHistory(
       chatId,
-      isGroup ? 4 : 8,
+      isGroup ? 6 : 10,
     );
 
     // 3. Remove a última mensagem para não duplicar no prompt do Gemini
