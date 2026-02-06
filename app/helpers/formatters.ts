@@ -18,3 +18,17 @@ export function formatCpfCnpj(value: string | number): string {
   // Retorna o valor original se não for nem CPF nem CNPJ
   return value.toString();
 }
+
+export function formatTelefone(valor: string | number): string {
+  const numeros = String(valor).replace(/\D/g, "");
+
+  if (numeros.length !== 11) {
+    return valor.toString();
+  }
+
+  const ddd = numeros.slice(0, 2);
+  const parte1 = numeros.slice(2, 7);
+  const parte2 = numeros.slice(7);
+
+  return `(${ddd})${parte1}-${parte2}`;
+}

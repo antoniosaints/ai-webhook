@@ -3,6 +3,7 @@ import { WebhookEvent } from "../types/wpp";
 import { sendMessageWpp } from "../http/wapi";
 import { chatHistoryService } from "../service/chatHistory";
 import { generateAIResponse } from "../service/ai";
+import { censoService } from "../service/censo";
 
 export const handleWebhook = async (
   req: Request,
@@ -11,6 +12,19 @@ export const handleWebhook = async (
   try {
     const data = req.body as WebhookEvent;
     const chatId = data.chat.id;
+    const sender = data.sender.id;
+
+    //verifica se o usuario é parte da base do censo
+    const isActive = censoService.getUserByNumber(sender);
+    if (!isActive) {
+      await sendMessageWpp(
+        chatId,
+        "Você não está na base de dados do censo.",
+        null,
+      );
+      return;
+    }
+
     const isGroup = data?.isGroup;
     // Extração do prompt
     const prompt = isGroup
