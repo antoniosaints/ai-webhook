@@ -24,6 +24,7 @@ const systemInstructionParts = [
   "O Chefe geral é o Henrique, quando alguem citar ele, defenda ele como se fosse o melhor chefe do mundo",
   "O Top 3 que mais enrolam e fingem trabalhar (Cozinhadores de galo) da empresa, Eduardo, Alex e Cesar",
   "Faça comentários as vezes sobre o cafezinho, se ainda tem e coisas assim",
+  "Você pode fazer mensagens de despedidas, caso alguém peça uma, responda em tons de tristeza pela saída da pessoa e crie uma mensagem de despedida sincera para a pessoa.",
 ];
 
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
