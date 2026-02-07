@@ -33,7 +33,7 @@ export const handleWebhook = async (
       await sendMessageWpp(
         chatId,
         "Não encontrei você na base, fale com alguém do setor de RH da CAS.",
-        null,
+        isGroup ? messageId : null,
       );
       return;
     }
@@ -63,7 +63,7 @@ export const handleWebhook = async (
     // O usuário recebe a resposta mais rápido sem esperar o banco gravar
     await Promise.all([
       chatHistoryService.saveMessage(chatId, "model", aiResponse),
-      sendMessageWpp(chatId, aiResponse, messageId),
+      sendMessageWpp(chatId, aiResponse, isGroup ? messageId : null),
     ]);
 
     res.json({ success: true, ai_response: aiResponse });
