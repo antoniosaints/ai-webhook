@@ -28,6 +28,8 @@ export const handleWebhook = async (
       return;
     }
 
+    let adicionalText = "";
+
     //verifica se o usuario é parte da base do censo
     const isActive = await censoService.getUserByNumber(sender);
     if (!isActive) {
