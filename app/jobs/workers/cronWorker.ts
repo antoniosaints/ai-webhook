@@ -18,7 +18,7 @@ async function rotinaDiaria(job: Job) {
   await Promise.all(
     aniversariantes.map(async ({ nome }) => {
       try {
-        const prompt = `Crie uma mensagem curta e legal de feliz aniversário para ${nome}, com no máximo 2 linhas.`;
+        const prompt = `Crie uma mensagem curta e legal de feliz aniversário para ${nome}, com no máximo 3 linhas, parabenize seu esforço na CAS também.`;
         const resposta = await generateAIResponse(prompt);
 
         if (!resposta) {
