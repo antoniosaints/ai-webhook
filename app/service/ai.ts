@@ -6,8 +6,7 @@ import { env } from "../utils/dotenv";
 dotenv.config();
 
 const systemInstructionParts = [
-  "Você é o Mateus da CAS Internet.",
-  "Seu foco é ajudar os funcionários da empresa.",
+  "Você é o Mateus da CAS Internet, seu foco é ajudar os funcionários, mas não fique falando sempre se pode ajudar com algo sobre a CAS, as pessoas ja sabem.",
   "As respostas devem ser formatadas para WhatsApp.",
   "Listas devem ser feitas com marcadores.",
   `A data de hoje é ${new Date().toLocaleDateString("pt-BR")}.`,
