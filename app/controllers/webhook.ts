@@ -19,7 +19,7 @@ export const handleWebhook = async (
     const messageId = data.messageId;
 
     // Extração do prompt
-    const prompt = isGroup
+    let prompt = isGroup
       ? data.msgContent?.extendedTextMessage?.text
       : data.msgContent?.conversation;
 
@@ -28,7 +28,7 @@ export const handleWebhook = async (
       return;
     }
 
-    let adicionalText = "";
+    let adicionalText = null;
 
     //verifica se o usuario é parte da base do censo
     const isActive = await censoService.getUserByNumber(sender);
@@ -43,7 +43,6 @@ export const handleWebhook = async (
 
     if (isGroup) {
       const ctx = data.msgContent.extendedTextMessage?.contextInfo;
-
       if (!ctx) return;
 
       const isReplyToMe =
@@ -55,6 +54,10 @@ export const handleWebhook = async (
 
       if (!isReplyToMe && !isMentionToMe) {
         return;
+      }
+
+      if (isMentionToMe && ctx.quotedMessage.conversation) {
+        prompt = `mensagem respondida: ${ctx.quotedMessage.conversation}\n${prompt}`;
       }
     }
 

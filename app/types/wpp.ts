@@ -22,9 +22,15 @@ export interface DisappearingMode {
   initiatedByMe: boolean;
 }
 
+export interface QuotedMessage {
+  conversation: string;
+  messageContextInfo: MessageContextInfo;
+}
+
 export interface ContextInfo {
   mentionedJid: string[];
   participant: string;
+  quotedMessage: QuotedMessage;
   disappearingMode: DisappearingMode;
 }
 
