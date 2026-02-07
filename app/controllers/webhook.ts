@@ -14,17 +14,6 @@ export const handleWebhook = async (
     const chatId = data.chat.id;
     const sender = data.sender.id;
 
-    //verifica se o usuario é parte da base do censo
-    const isActive = await censoService.getUserByNumber(sender);
-    if (!isActive) {
-      await sendMessageWpp(
-        chatId,
-        "Não encontrei você na base, fale com alguém do setor de RH da CAS.",
-        null,
-      );
-      return;
-    }
-
     const isGroup = data?.isGroup;
     // Extração do prompt
     const prompt = isGroup
@@ -35,6 +24,17 @@ export const handleWebhook = async (
 
     if (!prompt) {
       res.status(400).json({ error: "Mensagem vazia ou formato inválido" });
+      return;
+    }
+
+    //verifica se o usuario é parte da base do censo
+    const isActive = await censoService.getUserByNumber(sender);
+    if (!isActive) {
+      await sendMessageWpp(
+        chatId,
+        "Não encontrei você na base, fale com alguém do setor de RH da CAS.",
+        null,
+      );
       return;
     }
 
