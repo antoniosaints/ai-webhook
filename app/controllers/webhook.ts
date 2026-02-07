@@ -15,10 +15,29 @@ export const handleWebhook = async (
     const sender = data.sender.id;
     const connectedLid = data.connectedLid;
     const isGroup = data?.isGroup;
+
+    const messageId = data.messageId;
+
     // Extração do prompt
     const prompt = isGroup
       ? data.msgContent?.extendedTextMessage?.text
       : data.msgContent?.conversation;
+
+    if (!prompt) {
+      res.status(400).json({ error: "Mensagem vazia ou formato inválido" });
+      return;
+    }
+
+    //verifica se o usuario é parte da base do censo
+    const isActive = await censoService.getUserByNumber(sender);
+    if (!isActive) {
+      await sendMessageWpp(
+        chatId,
+        "Não encontrei você na base, fale com alguém do setor de RH da CAS.",
+        isGroup ? messageId : null,
+      );
+      return;
+    }
 
     if (isGroup) {
       const ctx = data.msgContent.extendedTextMessage?.contextInfo;
@@ -35,24 +54,6 @@ export const handleWebhook = async (
       if (!isReplyToMe && !isMentionToMe) {
         return;
       }
-    }
-
-    const messageId = data.messageId;
-
-    if (!prompt) {
-      res.status(400).json({ error: "Mensagem vazia ou formato inválido" });
-      return;
-    }
-
-    //verifica se o usuario é parte da base do censo
-    const isActive = await censoService.getUserByNumber(sender);
-    if (!isActive) {
-      await sendMessageWpp(
-        chatId,
-        "Não encontrei você na base, fale com alguém do setor de RH da CAS.",
-        isGroup ? messageId : null,
-      );
-      return;
     }
 
     // 1. Salva a mensagem do usuário imediatamente (Segurança de dados)
