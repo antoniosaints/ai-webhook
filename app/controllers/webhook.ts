@@ -8,7 +8,7 @@ import { censoService } from "../service/censo";
 export const handleWebhook = async (
   req: Request,
   res: Response,
-): Promise<void> => {
+): Promise<any> => {
   try {
     const data = req.body as WebhookEvent;
     const chatId = data.chat.id;
@@ -24,8 +24,7 @@ export const handleWebhook = async (
       : data.msgContent?.conversation;
 
     if (!prompt) {
-      res.status(400).json({ error: "Mensagem vazia ou formato inválido" });
-      return;
+      return res.status(200).json({ success: true });
     }
 
     let adicionalText = null;
@@ -53,7 +52,7 @@ export const handleWebhook = async (
         ctx.mentionedJid?.includes(connectedLid);
 
       if (!isReplyToMe && !isMentionToMe) {
-        return;
+        return res.status(200).json({ success: true });
       }
 
       if (isMentionToMe && ctx.quotedMessage.conversation) {
@@ -89,7 +88,7 @@ export const handleWebhook = async (
       sendMessageWpp(chatId, aiResponse, isGroup ? messageId : null),
     ]);
 
-    res.json({ success: true, ai_response: aiResponse });
+    res.status(200).json({ success: true, ai_response: aiResponse });
   } catch (error) {
     console.error("Erro no webhook:", error);
     // Mesmo com erro, respondemos 200 pro WhatsApp não ficar tentando reenviar a mensagem infinitamente
