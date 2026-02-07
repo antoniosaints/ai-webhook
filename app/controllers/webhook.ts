@@ -13,12 +13,29 @@ export const handleWebhook = async (
     const data = req.body as WebhookEvent;
     const chatId = data.chat.id;
     const sender = data.sender.id;
-
+    const connectedLid = data.connectedLid;
     const isGroup = data?.isGroup;
     // Extração do prompt
     const prompt = isGroup
       ? data.msgContent?.extendedTextMessage?.text
       : data.msgContent?.conversation;
+
+    if (isGroup) {
+      const ctx = data.msgContent.extendedTextMessage?.contextInfo;
+
+      if (!ctx) return;
+
+      const isReplyToMe =
+        ctx.participant === connectedLid || ctx.participant === connectedLid;
+
+      const isMentionToMe =
+        ctx.mentionedJid?.includes(connectedLid) ||
+        ctx.mentionedJid?.includes(connectedLid);
+
+      if (!isReplyToMe && !isMentionToMe) {
+        return;
+      }
+    }
 
     const messageId = data.messageId;
 

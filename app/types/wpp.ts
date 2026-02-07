@@ -24,6 +24,7 @@ export interface DisappearingMode {
 
 export interface ContextInfo {
   mentionedJid: string[];
+  participant: string;
   disappearingMode: DisappearingMode;
 }
 
