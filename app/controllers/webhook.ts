@@ -55,7 +55,7 @@ export const handleWebhook = async (
         "Não encontrei você na base, fale com alguém do setor de RH da CAS.",
         isGroup ? messageId : null,
       );
-      return;
+      return res.status(200).json({ success: true });
     }
 
     // 1. Salva a mensagem do usuário imediatamente (Segurança de dados)
