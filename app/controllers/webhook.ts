@@ -27,19 +27,6 @@ export const handleWebhook = async (
       return res.status(200).json({ success: true });
     }
 
-    let adicionalText = null;
-
-    //verifica se o usuario é parte da base do censo
-    const isActive = await censoService.getUserByNumber(sender);
-    if (!isActive) {
-      await sendMessageWpp(
-        chatId,
-        "Não encontrei você na base, fale com alguém do setor de RH da CAS.",
-        isGroup ? messageId : null,
-      );
-      return;
-    }
-
     if (isGroup) {
       const ctx = data.msgContent.extendedTextMessage?.contextInfo;
       if (!ctx) return;
@@ -58,6 +45,17 @@ export const handleWebhook = async (
       if (isMentionToMe && ctx.quotedMessage.conversation) {
         prompt = `mensagem respondida: ${ctx.quotedMessage.conversation}\n${prompt}`;
       }
+    }
+
+    //verifica se o usuario é parte da base do censo
+    const isActive = await censoService.getUserByNumber(sender);
+    if (!isActive) {
+      await sendMessageWpp(
+        chatId,
+        "Não encontrei você na base, fale com alguém do setor de RH da CAS.",
+        isGroup ? messageId : null,
+      );
+      return;
     }
 
     // 1. Salva a mensagem do usuário imediatamente (Segurança de dados)
