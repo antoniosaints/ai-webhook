@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhook Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Webhook Dashboard</h1>
+            <nav>
+                <a href="/" class="active">Visão Geral</a>
+                <a href="/chat.html">Histórico de Chat</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="grid">
+                <div class="card">
+                    <h2>Total de Mensagens</h2>
+                    <div id="total-messages" class="stat-value">-</div>
+                </div>
+                <div class="card">
+                    <h2>Usuários Únicos</h2>
+                    <div id="total-users" class="stat-value">-</div>
+                </div>
+                <div class="card">
+                    <h2>Jobs Ativos (Cron)</h2>
+                    <div id="active-jobs" class="stat-value">-</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Status do Sistema</h2>
+                <p style="color: var(--success); font-weight: 600;">● Sistema Operacional</p>
+                <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                    O sistema está processando webhooks e jobs em segundo plano.
+                </p>
+            </div>
+        </main>
+    </div>
+    <script src="/js/app.js"></script>
+    <script>
+        // Init stats
+        fetchStats();
+    </script>
+</body>
+</html>

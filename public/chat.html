@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Chat - Webhook</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Histórico de Chat</h1>
+            <nav>
+                <a href="/">Visão Geral</a>
+                <a href="/chat.html" class="active">Histórico de Chat</a>
+            </nav>
+        </header>
+
+        <main>
+            <form id="filter-form" class="filter-form">
+                <input type="text" id="phone-filter" placeholder="Filtrar por telefone (ex: 55989...)">
+                <button type="submit">Filtrar</button>
+            </form>
+
+            <div id="chat-list" class="chat-list">
+                <!-- Messages will be loaded here -->
+                <div class="loading">Carregando...</div>
+            </div>
+        </main>
+    </div>
+    <script src="/js/app.js"></script>
+    <script>
+        // Init history
+        fetchHistory();
+    </script>
+</body>
+
+</html>
