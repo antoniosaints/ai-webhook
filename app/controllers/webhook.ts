@@ -4,6 +4,7 @@ import { sendMessageWpp } from "../http/wapi";
 import { chatHistoryService } from "../service/chatHistory";
 import { generateAIResponse } from "../service/ai";
 import { censoService } from "../service/censo";
+import { env } from "../utils/dotenv";
 
 export const handleWebhook = async (
   req: Request,
@@ -29,14 +30,12 @@ export const handleWebhook = async (
 
     if (isGroup) {
       const ctx = data.msgContent.extendedTextMessage?.contextInfo;
-      if (!ctx) return;
+      if (!ctx) return res.status(200).json({ success: true });
 
       const isReplyToMe =
         ctx.participant === connectedLid || ctx.participant === connectedLid;
 
-      const isMentionToMe =
-        ctx.mentionedJid?.includes(connectedLid) ||
-        ctx.mentionedJid?.includes(connectedLid);
+      const isMentionToMe = ctx.mentionedJid?.includes(connectedLid);
 
       if (!isReplyToMe && !isMentionToMe) {
         return res.status(200).json({ success: true });
@@ -64,7 +63,7 @@ export const handleWebhook = async (
     // 2. Busca histórico (inclui a mensagem que acabamos de salvar)
     const fullHistory = await chatHistoryService.getHistory(
       chatId,
-      isGroup ? 10 : 15,
+      isGroup ? env.CTX_GRUPO : env.CTX_PRIVADO,
     );
 
     // 3. Remove a última mensagem para não duplicar no prompt do Gemini
@@ -94,6 +93,6 @@ export const handleWebhook = async (
     console.error("Erro no webhook:", error);
     // Mesmo com erro, respondemos 200 pro WhatsApp não ficar tentando reenviar a mensagem infinitamente
     // Mas logamos o erro no servidor.
-    res.status(500).json({ error: "Erro interno ao processar mensagem" });
+    res.status(200).json({ success: true });
   }
 };
