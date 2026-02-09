@@ -19,3 +19,15 @@ export const addEmailQueue = async (data: {
     },
   });
 };
+
+export const listAllEmailJobs = async () => {
+  const [crons, jobs] = await Promise.all([
+    emailQueue.getJobSchedulers(),
+    emailQueue.getJobs(["waiting", "active", "delayed", "failed"]),
+  ]);
+
+  return {
+    crons,
+    jobs,
+  };
+};

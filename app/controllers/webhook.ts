@@ -42,9 +42,9 @@ export const handleWebhook = async (
         return res.status(200).json({ success: true });
       }
 
-      if (isMentionToMe && ctx.quotedMessage.conversation) {
-        prompt = `mensagem respondida: ${ctx.quotedMessage.conversation}\n${prompt}`;
-      }
+      // if (isMentionToMe && ctx?.quotedMessage?.conversation) {
+      //   prompt = `mensagem respondida: ${ctx.quotedMessage?.conversation}\n minha mensagem:${prompt}`;
+      // }
     }
 
     //verifica se o usuario é parte da base do censo
@@ -64,7 +64,7 @@ export const handleWebhook = async (
     // 2. Busca histórico (inclui a mensagem que acabamos de salvar)
     const fullHistory = await chatHistoryService.getHistory(
       chatId,
-      isGroup ? 6 : 10,
+      isGroup ? 10 : 15,
     );
 
     // 3. Remove a última mensagem para não duplicar no prompt do Gemini
@@ -79,6 +79,9 @@ export const handleWebhook = async (
     const aiResponse = await generateAIResponse(prompt, contextForGemini);
     console.log("Resposta da IA:", aiResponse);
 
+    if (!aiResponse) {
+      return res.status(200).json({ success: true });
+    }
     // 5. Otimização: Salva no banco e Envia no WPP em paralelo
     // O usuário recebe a resposta mais rápido sem esperar o banco gravar
     await Promise.all([

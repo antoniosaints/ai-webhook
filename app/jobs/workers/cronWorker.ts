@@ -18,7 +18,8 @@ async function rotinaDiaria(job: Job) {
   await Promise.all(
     aniversariantes.map(async ({ nome }) => {
       try {
-        const prompt = `Crie uma mensagem curta e legal de feliz aniversário para ${nome}, com no máximo 3 linhas, parabenize seu esforço na CAS também.`;
+        const prompt = `Crie uma mensagem curta e legal de feliz aniversário para ${nome}, 
+        com no máximo 3 linhas, parabenize seu esforço na CAS também.`;
         const resposta = await generateAIResponse(prompt);
 
         if (!resposta) {
@@ -39,7 +40,7 @@ async function rotinaDiaria(job: Job) {
   console.log("[ROTINA] Rotina diária finalizada");
 }
 
-new Worker(
+const workerCron = new Worker(
   "rotinas",
   async (job) => {
     if (job.name === "rotina-diaria") {
@@ -50,3 +51,11 @@ new Worker(
     connection: redis,
   },
 );
+
+export function pauseCronWorker() {
+  workerCron.pause();
+}
+
+export function resumeCronWorker() {
+  workerCron.resume();
+}

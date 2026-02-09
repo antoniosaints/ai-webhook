@@ -7,6 +7,9 @@ export const sendMessageWpp = async (
   responseTo: string | null = null,
 ) => {
   try {
+    if (!message) {
+      throw new Error("Mensagem vazia");
+    }
     const response = await http.post(
       `message/send-text?instanceId=${env.INSTANCE_ID}`,
       {
@@ -17,8 +20,11 @@ export const sendMessageWpp = async (
       },
     );
     return response.data;
-  } catch (error) {
-    console.error("Erro ao enviar mensagem:", error);
+  } catch (error: any) {
+    console.error(
+      "Erro ao enviar mensagem:",
+      error?.response?.data?.message || "Erro desconhecido",
+    );
     return error;
   }
 };

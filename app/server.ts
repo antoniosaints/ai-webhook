@@ -1,9 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import { handleWebhook } from "./controllers/webhook";
-import { startRotinaQueue } from "./jobs/queue/cronQueue";
+import { listAllCronJobs, startRotinaQueue } from "./jobs/queue/cronQueue";
 import { updateWebhookOnReceived } from "./http/wapi";
 import "./jobs/workers/cronWorker";
+import { listCrons } from "./controllers/bullmq";
 
 // Carrega variáveis de ambiente
 dotenv.config();
@@ -14,9 +15,9 @@ app.use(express.json());
 
 // Inicia a fila de rotinas
 startRotinaQueue();
-
 // Definição das Rotas
 app.post("/webhook", handleWebhook);
+app.get("/listCrons", listCrons);
 app.post("/setWebhook", updateWebhookOnReceived);
 
 // Inicia o servidor

@@ -39,3 +39,15 @@ export const startRotinaQueue = async () => {
     console.error("Erro ao iniciar a fila de rotinas:", error);
   }
 };
+
+export const listAllCronJobs = async () => {
+  const [crons, jobs] = await Promise.all([
+    rotinaQueue.getJobSchedulers(),
+    rotinaQueue.getJobs(["waiting", "active", "delayed", "failed"]),
+  ]);
+
+  return {
+    crons,
+    jobs,
+  };
+};
