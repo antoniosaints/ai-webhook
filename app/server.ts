@@ -5,7 +5,12 @@ import { listAllCronJobs, startRotinaQueue } from "./jobs/queue/cronQueue";
 import { updateWebhookOnReceived } from "./http/wapi";
 import "./jobs/workers/cronWorker";
 import { listCrons } from "./controllers/bullmq";
-import { getChatHistory, getSystemStats } from "./controllers/api";
+import {
+  getChatHistory,
+  getSystemStats,
+  getSystemLogs,
+  sendMessage,
+} from "./controllers/api";
 import path from "path";
 
 // Carrega variáveis de ambiente
@@ -32,6 +37,8 @@ app.post("/setWebhook", updateWebhookOnReceived);
 // Rotas da UI
 app.get("/api/history", getChatHistory);
 app.get("/api/stats", getSystemStats);
+app.get("/api/logs", getSystemLogs);
+app.post("/api/send", sendMessage);
 
 // Inicia o servidor
 const PORT = process.env.PORT || 3000;

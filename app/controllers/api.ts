@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { getDb } from "../database/db";
 import { listAllCronJobs } from "../jobs/queue/cronQueue";
+import { sendMessageWpp } from "../http/wapi";
+import { chatHistoryService } from "../service/chatHistory";
 
 export const getChatHistory = async (req: Request, res: Response) => {
   try {
@@ -52,8 +54,54 @@ export const getSystemStats = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error("Erro ao buscar estatísticas:", error);
+    res.json({ success: false, error: "Erro ao buscar estatísticas" });
+  }
+};
+
+export const getSystemLogs = async (req: Request, res: Response) => {
+  try {
+    const db = await getDb();
+    const limit = 100; // Limit last 100 logs
+
+    // Optional: Add filtering by level or timestamp if needed later
+
+    const logs = await db.all(
+      `SELECT * FROM system_logs ORDER BY timestamp DESC LIMIT ?`,
+      [limit],
+    );
+
+    res.json({ success: true, logs });
+  } catch (error) {
+    console.error("Erro ao buscar logs:", error);
+    res.status(500).json({ success: false, error: "Erro ao buscar logs" });
+  }
+};
+
+export const sendMessage = async (req: Request, res: Response) => {
+  try {
+    const { phone, message } = req.body;
+
+    if (!phone || !message) {
+      res
+        .status(400)
+        .json({
+          success: false,
+          error: "Telefone e mensagem são obrigatórios",
+        });
+      return;
+    }
+
+    // 1. Envia mensagem via WPP
+    const wppResult = await sendMessageWpp(phone, message);
+
+    // 2. Salva no histórico como 'model' (enviada pelo sistema/atendente)
+    await chatHistoryService.saveMessage(phone, "model", message);
+
+    res.json({ success: true, result: wppResult });
+  } catch (error) {
+    console.error("Erro ao enviar mensagem:", error);
     res
       .status(500)
-      .json({ success: false, error: "Erro ao buscar estatísticas" });
+      .json({ success: false, error: "Erro interno ao enviar mensagem" });
   }
 };

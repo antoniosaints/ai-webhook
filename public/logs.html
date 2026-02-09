@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs do Sistema - WebhookPro</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="brand"><span>⚡</span> WebhookPro</div>
+        <nav class="nav-links">
+            <a href="/" class="nav-item"><span>📊</span> Visão Geral</a>
+            <a href="/jobs.html" class="nav-item"><span>⏰</span> Jobs & Rotinas</a>
+            <a href="/chat.html" class="nav-item"><span>💬</span> Chat Histórico</a>
+            <a href="/logs.html" class="nav-item active"><span>📜</span> Logs do Sistema</a>
+            <a href="/send.html" class="nav-item"><span>📨</span> Enviar Mensagem</a>
+        </nav>
+    </aside>
+
+    <div class="main-content">
+        <header>
+            <h1>Logs do Sistema</h1>
+            <p>Eventos e alertas do servidor em tempo real.</p>
+        </header>
+
+        <div class="card">
+            <div id="logs-list" class="logs-list">
+                <div class="loading">Carregando logs...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+
+</html>

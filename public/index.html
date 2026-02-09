@@ -1,50 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webhook Dashboard</title>
     <link rel="stylesheet" href="/css/style.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-    <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <span>⚡</span> WebhookPro
+        </div>
+        <nav class="nav-links">
+            <a href="/" class="nav-item active">
+                <span>📊</span> Visão Geral
+            </a>
+            <a href="/jobs.html" class="nav-item">
+                <span>⏰</span> Jobs & Rotinas
+            </a>
+            <a href="/chat.html" class="nav-item">
+                <span>💬</span> Chat Histórico
+            </a>
+            <a href="/logs.html" class="nav-item">
+                <span>📜</span> Logs do Sistema
+            </a>
+            <a href="/send.html" class="nav-item">
+                <span>📨</span> Enviar Mensagem
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
         <header>
-            <h1>Webhook Dashboard</h1>
-            <nav>
-                <a href="/" class="active">Visão Geral</a>
-                <a href="/chat.html">Histórico de Chat</a>
-            </nav>
+            <h1>Visão Geral</h1>
+            <p>Monitoramento em tempo real do assistente.</p>
         </header>
 
-        <main>
-            <div class="grid">
-                <div class="card">
-                    <h2>Total de Mensagens</h2>
-                    <div id="total-messages" class="stat-value">-</div>
-                </div>
-                <div class="card">
-                    <h2>Usuários Únicos</h2>
-                    <div id="total-users" class="stat-value">-</div>
-                </div>
-                <div class="card">
-                    <h2>Jobs Ativos (Cron)</h2>
-                    <div id="active-jobs" class="stat-value">-</div>
+        <!-- Stats Grid -->
+        <div class="grid">
+            <div class="card">
+                <h2>Total de Mensagens</h2>
+                <div id="total-messages" class="stat-value">-</div>
+            </div>
+            <div class="card">
+                <h2>Usuários Únicos</h2>
+                <div id="total-users" class="stat-value">-</div>
+            </div>
+            <div class="card">
+                <h2>Jobs Ativos</h2>
+                <div id="active-jobs" class="stat-value">-</div>
+            </div>
+        </div>
+
+        <!-- Charts Area -->
+        <div class="grid" style="grid-template-columns: 2fr 1fr;">
+            <div class="card">
+                <h2>Atividade Diária</h2>
+                <div class="chart-container">
+                    <canvas id="activityChart"></canvas>
                 </div>
             </div>
-
             <div class="card">
                 <h2>Status do Sistema</h2>
-                <p style="color: var(--success); font-weight: 600;">● Sistema Operacional</p>
-                <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
-                    O sistema está processando webhooks e jobs em segundo plano.
+                <div style="margin-top: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <span
+                            style="width: 10px; height: 10px; background: var(--secondary); border-radius: 50%;"></span>
+                        <span style="font-weight: 500;">API Online</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <span
+                            style="width: 10px; height: 10px; background: var(--secondary); border-radius: 50%;"></span>
+                        <span style="font-weight: 500;">Database Conectado</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="width: 10px; height: 10px; background: var(--warning); border-radius: 50%;"></span>
+                        <span style="font-weight: 500;">Jobs Processando</span>
+                    </div>
+                </div>
+                <p style="margin-top: 2rem; font-size: 0.8rem; color: var(--text-muted);">
+                    Versão 1.2.0 • Build 2026.02
                 </p>
             </div>
-        </main>
+        </div>
     </div>
+
     <script src="/js/app.js"></script>
-    <script>
-        // Init stats
-        fetchStats();
-    </script>
 </body>
+
 </html>
