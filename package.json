@@ -7,7 +7,7 @@
     "dev": "tsx app/server.ts",
     "cron": "tsx app/jobs/workers/cronWorker.ts",
     "build": "tsc && copyfiles -u 1 public/**/* dist/public",
-    "build:docker": "tsc && copyfiles -u 1 code/public/**/* code/dist/public",
+    "build:docker": "tsc && copyfiles -u 1 public/**/* dist/public",
     "start": "node dist/app/server.js",
     "start:cron": "node dist/app/jobs/workers/cronWorker.js"
   },
