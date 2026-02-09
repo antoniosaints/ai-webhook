@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "tsx app/server.ts",
     "cron": "tsx app/jobs/workers/cronWorker.ts",
-    "build": "tsc && copyfiles -u 1 public/**/* dist/public",
-    "build:docker": "tsc && copyfiles -u 1 public/**/* dist/public",
+    "build": "tsc && node scripts/copy-assets.js",
+    "build:docker": "tsc && node scripts/copy-assets.js",
     "start": "node dist/app/server.js",
     "start:cron": "node dist/app/jobs/workers/cronWorker.js"
   },
