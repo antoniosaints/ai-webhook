@@ -17,6 +17,10 @@ app.use(express.json());
 
 // Serve arquivos estáticos da pasta public
 app.use(express.static(path.join(__dirname, "../public")));
+console.log(
+  "Servindo arquivos estáticos de:",
+  path.join(__dirname, "../public"),
+);
 
 // Inicia a fila de rotinas
 startRotinaQueue();
