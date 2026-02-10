@@ -12,12 +12,20 @@ import {
   sendMessage,
 } from "./controllers/api";
 import path from "path";
-
+import { getContratoIXC } from "./controllers/ixc";
+import cors from "cors";
 // Carrega variáveis de ambiente
 dotenv.config();
 
 // Inicializa o Express
 const app = express();
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["*"],
+  }),
+);
 app.use(express.json());
 
 // Serve arquivos estáticos da pasta public
@@ -31,6 +39,7 @@ console.log(
 startRotinaQueue();
 // Definição das Rotas
 app.post("/webhook", handleWebhook);
+app.get("/clienteIXC/:id", getContratoIXC);
 app.get("/listCrons", listCrons);
 app.post("/setWebhook", updateWebhookOnReceived);
 
