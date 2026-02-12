@@ -14,6 +14,7 @@ import {
 import path from "path";
 import { getContratoIXC } from "./controllers/ixc";
 import cors from "cors";
+import { sendMessageToEficiencia } from "./controllers/sendToCas";
 // Carrega variáveis de ambiente
 dotenv.config();
 
@@ -39,6 +40,7 @@ console.log(
 startRotinaQueue();
 // Definição das Rotas
 app.post("/webhook", handleWebhook);
+app.post("/sendToGroup", sendMessageToEficiencia);
 app.get("/clienteIXC/:id", getContratoIXC);
 app.get("/listCrons", listCrons);
 app.post("/setWebhook", updateWebhookOnReceived);
