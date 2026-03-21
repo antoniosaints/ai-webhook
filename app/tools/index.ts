@@ -167,7 +167,7 @@ export const toolsDefinitions: FunctionDeclaration[] = [
   {
     name: "verificarClienteCenso",
     description:
-      "Verifica informações do cliente no sistema pelo CPF ou CNPJ, retorne a lista de informações formatada",
+      "Caso solicitado informações sobre um cliente, use essa tool para verificar se ele existe no sistema pelo CPF ou CNPJ, retorne a lista de informações formatada",
     parameters: {
       type: SchemaType.OBJECT,
       properties: {
@@ -203,7 +203,7 @@ export const toolsDefinitions: FunctionDeclaration[] = [
   {
     name: "comodatoClientePorContrato",
     description:
-      "Busca o comodato do contrato pelo ID, sempre retorne o comodato completo que vem da resposta e não crie dados ficticios.",
+      "Busca o comodato do contrato pelo ID do contrato, sempre retorne o comodato completo que vem da resposta e não crie dados ficticios.",
     parameters: {
       type: SchemaType.OBJECT,
       properties: {
@@ -242,8 +242,8 @@ export const toolsDefinitions: FunctionDeclaration[] = [
   },
   {
     name: "proximosAniversariantes",
-    description: `Verifica os próximos aniversariantes do mês com base na data${new Date().toLocaleDateString("pt-BR")},
-    sempre retorne a lista completa que vem como resposta, não resuma, formate com marcadores`,
+    description: `Busca os aniversariantes quando o usuário solicita, não crie dados ficticios, use essa ferramenta para buscar e retornar informações corretas sobre
+    aniversariantes do mes e proximos aniversariantes, formate como lista e retorne a resposta com marcadores.`,
     parameters: {
       type: SchemaType.OBJECT,
       properties: {},
