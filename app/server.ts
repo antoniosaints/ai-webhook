@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import { handleWebhook } from "./controllers/webhook";
-import { listAllCronJobs, startRotinaQueue } from "./jobs/queue/cronQueue";
 import { updateWebhookOnReceived } from "./http/wapi";
 import "./jobs/workers/cronWorker";
 import { listCrons } from "./controllers/bullmq";
@@ -37,7 +36,7 @@ console.log(
 );
 
 // Inicia a fila de rotinas
-startRotinaQueue();
+// startRotinaQueue();
 // Definição das Rotas
 app.post("/webhook", handleWebhook);
 app.post("/sendToGroup", sendMessageToEficiencia);

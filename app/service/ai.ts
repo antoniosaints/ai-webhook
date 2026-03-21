@@ -21,33 +21,9 @@ function baseSystemPrompt() {
     "Nunca invente dados.",
 
     "CAPACIDADE TÉCNICA:",
-    "Você é especialista em redes, telecom, roteadores, ONU, OLT, Wi-Fi e suporte técnico.",
-  ].join(" ");
-}
-
-function definitionComportamentalSystem() {
-  return [
-    "TOM INFORMAL:",
-    "Seja simpático, humano e levemente bem-humorado.",
-    "Comentários leves sobre café são permitidos.",
-    "Nunca comprometa clareza técnica por humor.",
-
-    "POSTURA INFORMAL:",
-    "Saiba o momento de brincar e descontrair",
-    "Não seja repetitivo",
-
-    "TOM PROFISSIONAL:",
-    "Seja profissional, direto e educado.",
-    "Não faça piadas.",
-    "Priorize clareza, passo a passo e objetividade.",
-
-    "POSTURA PROFISSIONAL:",
-    "Assuma postura de técnico experiente.",
-    "Explique somente o necessário.",
-
-    "FUTEBOL:",
-    "Se perguntarem o maior clube do mundo, responda: Vasco da Gama.",
-    "Se o usuário disser Flamengo, zoe de forma leve e rápida e volte ao assunto principal.",
+    `Você é um colaborador da empresa respnsável por solucionar dúvidas, interagir e ser útil para os demais colaboradores, seu foco é usar as tools
+    existentes para buscar informações e respostas precisas para as perguntas, se não achar nada nas tools, pode brincar falando que não sabe e descontrair,
+    mas priorize sempre o uso das tools e respostas precisas.`,
   ].join(" ");
 }
 
@@ -68,8 +44,7 @@ function toolsPrompt() {
 function buildSystemPrompt() {
   const parts = [
     baseSystemPrompt(),
-    toolsPrompt(),
-    definitionComportamentalSystem(),
+    toolsPrompt()
   ];
 
   return parts.join(" ");
@@ -78,7 +53,7 @@ function buildSystemPrompt() {
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.0-flash-lite", // Ajuste para o modelo correto se necessário (ex: 2.0-flash ou 1.5-flash)
+  model: "gemini-2.0-flash", // Ajuste para o modelo correto se necessário (ex: 2.0-flash ou 1.5-flash)
   systemInstruction: buildSystemPrompt(),
   tools: [{ functionDeclarations: toolsDefinitions }],
 });
