@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { handleWebhook } from "./controllers/webhook";
 import { updateWebhookOnReceived } from "./http/wapi";
-import "./jobs/workers/cronWorker";
+// import "./jobs/workers/cronWorker";
 import { listCrons } from "./controllers/bullmq";
 import {
   getChatHistory,
