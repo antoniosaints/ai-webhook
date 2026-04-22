@@ -8,6 +8,7 @@ dotenv.config({
 
 const envSchema = zod.object({
   GEMINI_API_KEY: zod.string().min(1, "GEMINI_API_KEY é obrigatório"),
+  GEMINI_API_MODEL: zod.string().min(1, "GEMINI_API_MODEL é obrigatório"),
   WAPI_KEY: zod.string().min(1, "WAPI_KEY é obrigatório"),
   INSTANCE_ID: zod.string().min(1, "INSTANCE_ID é obrigatório"),
   CENSO_MYSQL_HOST: zod.string().min(1, "CENSO_MYSQL_HOST é obrigatório"),
